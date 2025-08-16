@@ -1,0 +1,39 @@
+{
+  "name" : "annual_report_etl",
+  "jobMode" : "VISUAL",
+  "description" : "",
+  "role" : "arn:aws:iam::234559879809:role/aws-glue-service-role-src-cde2-v2",
+  "executionProperty" : {
+    "maxConcurrentRuns" : 1
+  },
+  "command" : {
+    "name" : "glueetl",
+    "scriptLocation" : "s3://aws-glue-assets-234559879809-eu-north-1/scripts/annual_report_etl.py",
+    "pythonVersion" : "3"
+  },
+  "defaultArguments" : {
+    "--enable-metrics" : "true",
+    "--enable-spark-ui" : "true",
+    "--spark-event-logs-path" : "s3://aws-glue-assets-234559879809-eu-north-1/sparkHistoryLogs/",
+    "--enable-job-insights" : "true",
+    "--enable-observability-metrics" : "true",
+    "--enable-glue-datacatalog" : "true",
+    "--job-bookmark-option" : "job-bookmark-enable",
+    "--job-language" : "python",
+    "--TempDir" : "s3://aws-glue-assets-234559879809-eu-north-1/temporary/"
+  },
+  "maxRetries" : 3,
+  "allocatedCapacity" : 10,
+  "timeout" : 480,
+  "maxCapacity" : 10.0,
+  "glueVersion" : "5.0",
+  "numberOfWorkers" : 10,
+  "workerType" : "G.1X",
+  "codeGenConfigurationNodes" : "{\"node-1755348740499\":{\"S3GlueParquetTarget\":{\"AutoDataQuality\":{\"EvaluationContext\":\"EvaluateDataQuality_node1755348281608\",\"IsEnabled\":true},\"Compression\":\"uncompressed\",\"Inputs\":[\"node-1755348536748\"],\"Name\":\"Amazon S3\",\"NumberTargetPartitions\":\"0\",\"PartitionKeys\":[],\"Path\":\"s3://aws-glue-service-role-src-cde2-v2/target-data-store/parquet-reports/\",\"SchemaChangePolicy\":{\"EnableUpdateCatalog\":false}}},\"node-1755348536748\":{\"ApplyMapping\":{\"Inputs\":[\"node-1755348357516\"],\"Mapping\":[{\"Dropped\":false,\"FromPath\":[\"year\"],\"FromType\":\"long\",\"ToKey\":\"year\",\"ToType\":\"int\"},{\"Dropped\":false,\"FromPath\":[\"industry_aggregation_nzsioc\"],\"FromType\":\"string\",\"ToKey\":\"industry_aggregation_nzsioc\",\"ToType\":\"string\"},{\"Dropped\":false,\"FromPath\":[\"industry_code_nzsioc\"],\"FromType\":\"string\",\"ToKey\":\"industry_code_nzsioc\",\"ToType\":\"string\"},{\"Dropped\":false,\"FromPath\":[\"industry_name_nzsioc\"],\"FromType\":\"string\",\"ToKey\":\"industry_name_nzsioc\",\"ToType\":\"string\"},{\"Dropped\":false,\"FromPath\":[\"units\"],\"FromType\":\"string\",\"ToKey\":\"measure\",\"ToType\":\"string\"},{\"Dropped\":false,\"FromPath\":[\"variable_code\"],\"FromType\":\"string\",\"ToKey\":\"variable_code\",\"ToType\":\"string\"},{\"Dropped\":false,\"FromPath\":[\"variable_name\"],\"FromType\":\"string\",\"ToKey\":\"variable_name\",\"ToType\":\"string\"},{\"Dropped\":false,\"FromPath\":[\"variable_category\"],\"FromType\":\"string\",\"ToKey\":\"variable_category\",\"ToType\":\"string\"},{\"Dropped\":false,\"FromPath\":[\"value\"],\"FromType\":\"string\",\"ToKey\":\"value\",\"ToType\":\"string\"},{\"Dropped\":false,\"FromPath\":[\"industry_code_anzsic06\"],\"FromType\":\"string\",\"ToKey\":\"industry_code_anzsic06\",\"ToType\":\"string\"}],\"Name\":\"Change Schema\"}},\"node-1755348357516\":{\"CatalogSource\":{\"Database\":\"annual_reports\",\"Name\":\"AWS Glue Data Catalog\",\"PartitionPredicate\":\"\",\"Table\":\"csv_reports\"}}}",
+  "sourceControlDetails" : {
+    "provider" : "GITHUB",
+    "repository" : "aws_projects",
+    "branch" : "feature_glue/aws_glue_etl_csv_to_parquet",
+    "folder" : "aws/glue/scripts"
+  }
+}
